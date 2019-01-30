@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseApp
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
-import com.google.firebase.ml.vision.face.FirebaseVisionFaceContour
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -21,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val options = FirebaseVisionFaceDetectorOptions.Builder()
-            .setClassificationMode(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
+            .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS)
             .setClassificationMode(FirebaseVisionFaceDetectorOptions.ACCURATE) // 성능 (정확성)
             .build()
 
@@ -30,6 +29,13 @@ class MainActivity : AppCompatActivity() {
 
         val result = detector.detectInImage(imageForBitmap((test.drawable as BitmapDrawable).bitmap))
             .addOnSuccessListener { faces ->
+                for (face in faces) {
+                    Log.d("hoho", "smile: ${face.boundingBox.centerX()}")
+                    Log.d("hoho", "smile: ${face.boundingBox.centerY()}")
+                    Log.d("hoho", "smile: ${face.boundingBox.width()}") // 얼굴 옆
+                    Log.d("hoho", "smile: ${face.boundingBox.height()}") // 얼굴 높이
+                    Log.d("hoho", "윤관선: ${face.headEulerAngleZ}")
+                }
             }
             .addOnFailureListener { err ->
 
