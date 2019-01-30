@@ -17,6 +17,7 @@ class FaceDetectionActivity: AppCompatActivity() {
             .setClassificationMode(FirebaseVisionFaceDetectorOptions.ACCURATE) // 성능 (정확성)
             .setMinFaceSize(0.15f) // 최소 얼굴 크기
             .enableTracking() // 얼굴마다 고유값 넣는 것(선언 하면 true)
+            .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS) // 얼굴 윤곽선
             .build()
 
         val detector = FirebaseVision.getInstance()
@@ -33,7 +34,7 @@ class FaceDetectionActivity: AppCompatActivity() {
 
     // option 조
     fun faceOptionsExamples(){
-        
+
         // 정확한 인식 (ex)사진)
         val highAccuracyOpts = FirebaseVisionFaceDetectorOptions.Builder()
             .setPerformanceMode(FirebaseVisionFaceDetectorOptions.ACCURATE)
@@ -55,7 +56,7 @@ class FaceDetectionActivity: AppCompatActivity() {
     }
 
     // 감지된 얼굴의 정보 얻기
-    fun processFaceList(faces: List<FirebaseVisionFace>){
+    private fun processFaceList(faces: List<FirebaseVisionFace>){
         for (face in faces) {
             val bounds = face.boundingBox
             val rotY = face.headEulerAngleY
