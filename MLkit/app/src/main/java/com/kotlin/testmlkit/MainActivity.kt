@@ -48,45 +48,31 @@ class MainActivity : AppCompatActivity() {
 //            }
 
         // text
-        val detector = FirebaseVision.getInstance()
-            .onDeviceTextRecognizer
+//        val detector = FirebaseVision.getInstance()
+//            .onDeviceTextRecognizer
+//        val image = (test.drawable as BitmapDrawable).bitmap
+//        val result = detector.processImage(imageForBitmap((test.drawable as BitmapDrawable).bitmap))
+//            .addOnSuccessListener { firebaseVisionText ->
+//                test.setImageBitmap(null)
+//
+//
+//                val mutableImage = image.copy(Bitmap.Config.ARGB_8888, true)
+//                recognizeText(firebaseVisionText, mutableImage)
+//
+//                test.setImageBitmap(mutableImage)
+//            }
+//            .addOnFailureListener {
+//            }
+        val detector = FirebaseVision.getInstance().visionBarcodeDetector
         val image = (test.drawable as BitmapDrawable).bitmap
-        val result = detector.processImage(imageForBitmap((test.drawable as BitmapDrawable).bitmap))
-            .addOnSuccessListener { firebaseVisionText ->
-                test.setImageBitmap(null)
-
-
-                val mutableImage = image.copy(Bitmap.Config.ARGB_8888, true)
-                recognizeText(firebaseVisionText, mutableImage)
-
-                test.setImageBitmap(mutableImage)
-//                for (block in firebaseVisionText.textBlocks) {
-//                    val blockText = block.text
-//                    val blockConfidence = block.confidence
-//                    val blockLanguages = block.recognizedLanguages
-//                    val blockCornerPoints = block.cornerPoints
-//                    val blockFrame = block.boundingBox
-//                    for (line in block.lines) {
-//                        val lineText = line.text
-//                        val lineConfidence = line.confidence
-//                        val lineLanguages = line.recognizedLanguages
-//                        val lineCornerPoints = line.cornerPoints
-//                        val lineFrame = line.boundingBox
-//                        for (element in line.elements) {
-//                            if (Pattern.matches("^[A-Z]*$", element.text)) {
-//                                Log.d("hoho", "${element.text}")
-//                            }
-//                            val elementText = element.text
-//                            val elementConfidence = element.confidence
-//                            val elementLanguages = element.recognizedLanguages
-//                            val elementCornerPoints = element.cornerPoints
-//                            val elementFrame = element.boundingBox
-//                        }
-//                    }
-//                }
+        val result = detector.detectInImage(imageForBitmap(image))
+            .addOnSuccessListener {
+                Log.d("hoho", "$it")
             }
-            .addOnFailureListener {
+            .addOnFailureListener{
+
             }
+
     }
     private fun recognizeText(result: FirebaseVisionText?, image: Bitmap?) {
         if (result == null || image == null) {
