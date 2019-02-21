@@ -67,10 +67,11 @@ class MainActivity : AppCompatActivity() {
         val image = (test.drawable as BitmapDrawable).bitmap
         val result = detector.detectInImage(imageForBitmap(image))
             .addOnSuccessListener {
-                Log.d("hoho", "$it")
+                Log.d("hoho", "${it[0].cornerPoints}")
+                Log.d("hoho", "${it[0].valueType}")
             }
             .addOnFailureListener{
-
+                Log.d("hoho", "$it")
             }
 
     }
